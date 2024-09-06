@@ -26,5 +26,9 @@ Welcome to the **Resume ATS Checker**! This web application helps job seekers op
    cd Resume-ATS-checker
 
 2. Install the required packages:
-  ```bash
-  pip install -r requirements.txt
+   ```bash
+   pip install -r requirements.txt
+
+3. Run the application::
+   ```bash
+   python app.py
