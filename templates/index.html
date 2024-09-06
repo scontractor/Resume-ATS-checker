@@ -94,6 +94,34 @@
             font-weight: bold;
         }
 
+        .feedback-section {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .feedback-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .keyword {
+            background-color: #e9ecef;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .suggestions li {
+            margin-bottom: 0.5rem;
+        }
+
         @media screen and (max-width: 600px) {
             .container {
                 width: 95%;
@@ -124,6 +152,7 @@
             <button type="submit">Check ATS Score</button>
         </form>
         <div id="result"></div>
+        <div id="feedback" class="feedback-section"></div>
     </div>
 
     <script>
@@ -138,10 +167,22 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        $('#result').text('ATS Score: ' + response.ats_score);
+                        $('#result').html('<h3>ATS Score: ' + response.ats_score + '</h3>');
+
+                        var feedbackHtml = '<h3>Keyword Matches:</h3>';
+                        feedbackHtml += '<div class="keyword-list">' + response.keyword_matches.map(kw => '<span class="keyword">' + kw + '</span>').join('') + '</div>';
+
+                        feedbackHtml += '<h3>Missing Keywords:</h3>';
+                        feedbackHtml += '<div class="keyword-list">' + response.missing_keywords.map(kw => '<span class="keyword">' + kw + '</span>').join('') + '</div>';
+
+                        feedbackHtml += '<h3>Suggestions for Improvement:</h3>';
+                        feedbackHtml += '<ul class="suggestions">' + response.suggestions.map(s => '<li>' + s + '</li>').join('') + '</ul>';
+
+                        $('#feedback').html(feedbackHtml);
                     },
                     error: function() {
                         $('#result').text('Error: Unable to process the request.');
+                        $('#feedback').empty();
                     }
                 });
             });
