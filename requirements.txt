@@ -1,0 +1,6 @@
+# requirements.txt
+Flask==2.3.2
+PyPDF2==3.0.1
+transformers==4.30.2
+torch==2.0.1
+numpy==1.25.0
